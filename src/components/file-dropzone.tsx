@@ -3,7 +3,8 @@ import { FileUp, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useTauriFileDrop } from "@/hooks/use-tauri-file-drop";
-import { detectFileFormat, formatLabel, isRasterFormat } from "@/lib/formats";
+import { detectFileFormat, formatLabel } from "@/lib/formats";
+import { mergeIncomingFiles } from "@/lib/merge-incoming-files";
 import { cn } from "@/lib/utils";
 
 const ACCEPT = [
@@ -46,30 +47,11 @@ export function FileDropzone({ files, onFilesChange }: FileDropzoneProps) {
   );
 
   function addFiles(list: FileList | File[]): void {
-    const currentFiles = filesRef.current;
-    const incoming = Array.from(list);
-    if (incoming.length === 0) return;
-    const allIncomingImages = incoming.every((file) => {
-      const format = detectFileFormat(file);
-      return format !== null && isRasterFormat(format);
+    const next = mergeIncomingFiles({
+      currentFiles: filesRef.current,
+      incomingFiles: Array.from(list),
     });
-    const allCurrentImages =
-      currentFiles.length > 0 &&
-      currentFiles.every((file) => {
-        const format = detectFileFormat(file);
-        return format !== null && isRasterFormat(format);
-      });
-    if (allIncomingImages && (currentFiles.length === 0 || allCurrentImages)) {
-      const next = [...currentFiles];
-      incoming.forEach((file) => {
-        if (!next.some((existing) => existing.name === file.name && existing.size === file.size)) {
-          next.push(file);
-        }
-      });
-      onFilesChangeRef.current(next);
-      return;
-    }
-    onFilesChangeRef.current([incoming[incoming.length - 1]]);
+    onFilesChangeRef.current(next);
   }
 
   useTauriFileDrop({
@@ -100,7 +82,7 @@ export function FileDropzone({ files, onFilesChange }: FileDropzoneProps) {
         <FileUp className="mb-3 h-8 w-8 text-accent" />
         <p className="text-base font-semibold">Arraste arquivos ou toque para escolher</p>
         <p className="mt-1 max-w-md text-sm text-muted">
-          PDF, imagens, DOCX, ODT, DOC, TXT, MD, HTML, CSV e XLSX. Um documento novo vira o foco; o último convertido fica no histórico.
+          PDF, imagens, DOCX, ODT, DOC, TXT, MD, HTML, CSV e XLSX. Vários arquivos do mesmo tipo entram em lote; tipos mistos ficam só o último.
         </p>
         <input
           ref={inputRef}

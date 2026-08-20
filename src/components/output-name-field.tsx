@@ -10,7 +10,9 @@ export interface OutputNameFieldProps {
 export function OutputNameField({ stem, extension, isDisabled, onStemChange }: OutputNameFieldProps) {
   return (
     <label className="block space-y-2">
-      <span className="text-sm font-medium">Nome do arquivo convertido</span>
+      <span className="text-sm font-medium">
+        {extension === "zip" ? "Nome do ZIP" : "Nome do arquivo convertido"}
+      </span>
       <div className="flex items-center gap-2">
         <Input
           value={stem}
@@ -18,7 +20,7 @@ export function OutputNameField({ stem, extension, isDisabled, onStemChange }: O
           autoComplete="off"
           spellCheck={false}
           placeholder="nome-do-arquivo"
-          aria-label="Nome do arquivo convertido"
+          aria-label={extension === "zip" ? "Nome do ZIP" : "Nome do arquivo convertido"}
           onChange={(event) => onStemChange(event.target.value)}
         />
         <span className="shrink-0 rounded-xl border border-line bg-paper px-3 py-2 text-sm font-semibold text-muted">

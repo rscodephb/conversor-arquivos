@@ -6,6 +6,7 @@
 - Load PDF.js, pdf-lib, and Office parsers only when a conversion needs them.
 - Document Windows SmartScreen on unsigned installers.
 - Allow opening converted files with the system app (opener path scope).
+- Batch convert several files of the same type and zip the results.
 
 ## 0.1.1
 

@@ -24,6 +24,11 @@ describe("listConversionTargets", () => {
     const actualOptions = listConversionTargets(["docx", "pdf"]);
     expect(actualOptions).toEqual([]);
   });
+  it("offers docx for several odt files", () => {
+    const actualTargets = listConversionTargets(["odt", "odt"]).map((option) => option.target);
+    expect(actualTargets).toContain("docx");
+    expect(actualTargets).toContain("pdf");
+  });
   it("offers xlsx from csv", () => {
     const actualTargets = listConversionTargets(["csv"]).map((option) => option.target);
     expect(actualTargets).toContain("xlsx");

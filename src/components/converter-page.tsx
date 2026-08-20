@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ConversionHistory } from "@/components/conversion-history";
-import { detectFileFormat, formatLabel, MIME_TYPES, type ConversionResult, type FileFormat } from "@/lib/formats";
+import { detectFileFormat, formatLabel, isRasterFormat, MIME_TYPES, type ConversionResult, type FileFormat } from "@/lib/formats";
 import { listConversionTargets } from "@/lib/converters/registry";
 import { saveBytes } from "@/lib/file-io";
 import { openConversionOutput } from "@/lib/open-conversion-output";
@@ -37,6 +37,9 @@ export function ConverterPage() {
   const options = listConversionTargets(sourceFormats);
   const selected = options.find((option) => option.target === target) ?? options[0] ?? null;
   const outputExtension = selected?.target === "jpeg" ? "jpg" : selected?.target ?? "pdf";
+  const allRaster = sourceFormats.length > 0 && sourceFormats.every((format) => isRasterFormat(format));
+  const usesZip =
+    files.length > 1 && Boolean(selected) && !selected?.isMerge && !(allRaster && selected?.target === "pdf");
 
   function archiveCurrentOutput(): void {
     if (lastOutput) setHistory(lastOutput);
@@ -161,10 +164,13 @@ export function ConverterPage() {
         {files.length > 0 && selected && (
           <OutputNameField
             stem={outputStem}
-            extension={outputExtension}
+            extension={usesZip ? "zip" : outputExtension}
             isDisabled={isWorking}
             onStemChange={setOutputStem}
           />
+        )}
+        {usesZip && (
+          <p className="text-sm text-muted">Vários arquivos do mesmo tipo saem juntos em um ZIP.</p>
         )}
         {files.length > 0 && options.length === 0 && (
           <p className="text-sm text-warn">
