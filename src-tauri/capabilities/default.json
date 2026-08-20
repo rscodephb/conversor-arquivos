@@ -6,8 +6,19 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "opener:allow-open-path",
     "opener:allow-open-url",
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        { "path": "**" },
+        { "path": "$HOME/**" },
+        { "path": "$DOWNLOAD/**" },
+        { "path": "$DOCUMENT/**" },
+        { "path": "$DESKTOP/**" },
+        { "path": "$PUBLIC/**" },
+        { "path": "$TEMP/**" }
+      ]
+    },
     "dialog:default",
     "fs:allow-write-file",
     "fs:allow-read-file",
