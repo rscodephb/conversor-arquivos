@@ -14,6 +14,8 @@ Feito por **R&S CODE**. Conversões 100% no aparelho: PDF, imagens, DOCX, ODT, p
 
 No Windows use o instalador `.exe`. No Android instale o `.apk` (sideload). Os arquivos oficiais estão na página de Releases.
 
+O Windows pode mostrar **“O Windows protegeu o computador”** (SmartScreen). O instalador ainda não tem certificado de editor pago; o aviso é esperado, o arquivo não está corrompido. Clique em **Mais informações** e depois em **Executar assim mesmo**.
+
 ## Conversões
 
 | Origem | Destino | Qualidade |

@@ -4,6 +4,7 @@
 
 - Conversion tests for CSV ↔ XLSX round-trip and TXT → PDF.
 - Load PDF.js, pdf-lib, and Office parsers only when a conversion needs them.
+- Document Windows SmartScreen on unsigned installers.
 
 ## 0.1.1
 
