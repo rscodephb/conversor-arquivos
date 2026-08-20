@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Conversion tests for CSV ↔ XLSX round-trip and TXT → PDF.
+- Load PDF.js, pdf-lib, and Office parsers only when a conversion needs them.
+
 ## 0.1.1
 
 - Native file drop on the Windows app (Tauri drag-and-drop, not HTML5-only).

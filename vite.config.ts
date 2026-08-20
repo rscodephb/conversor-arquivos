@@ -17,6 +17,19 @@ export default defineConfig(() => ({
   optimizeDeps: {
     include: ["mammoth", "cfb"],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id: string): string | undefined {
+          if (id.includes("node_modules/pdfjs-dist")) return "pdfjs";
+          if (id.includes("node_modules/pdf-lib")) return "pdf-lib";
+          if (id.includes("node_modules/mammoth") || id.includes("node_modules/cfb")) return "office-parse";
+          if (id.includes("node_modules/docx")) return "docx-emit";
+          return undefined;
+        },
+      },
+    },
+  },
   clearScreen: false,
   server: {
     port: 1420,

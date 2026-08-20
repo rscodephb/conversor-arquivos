@@ -9,8 +9,6 @@ import { Progress } from "@/components/ui/progress";
 import { ConversionHistory } from "@/components/conversion-history";
 import { detectFileFormat, formatLabel, MIME_TYPES, type ConversionResult, type FileFormat } from "@/lib/formats";
 import { listConversionTargets } from "@/lib/converters/registry";
-import { convertFiles } from "@/lib/converters/convert";
-import { zipConversionResults } from "@/lib/converters/zip-results";
 import { saveBytes } from "@/lib/file-io";
 import { openConversionOutput } from "@/lib/open-conversion-output";
 import { buildConvertedFilename } from "@/lib/build-converted-filename";
@@ -65,6 +63,10 @@ export function ConverterPage() {
     setIsWorking(true);
     setProgress(4);
     try {
+      const [{ convertFiles }, { zipConversionResults }] = await Promise.all([
+        import("@/lib/converters/convert"),
+        import("@/lib/converters/zip-results"),
+      ]);
       const results = await convertFiles({
         files,
         target: selected.target,

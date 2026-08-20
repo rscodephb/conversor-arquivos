@@ -6,7 +6,7 @@ const rootDir: string = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
   test: {
-    environment: "node",
+    environment: "happy-dom",
     include: ["src/**/*.test.ts"],
   },
   resolve: {
