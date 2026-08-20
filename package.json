@@ -1,7 +1,7 @@
 {
   "name": "conversor-arquivos",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Offline file converter for Windows and Android by R&S CODE. Files never leave the device.",
   "license": "MIT",
   "author": "R&S CODE",
@@ -13,13 +13,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "vitest run",
     "preview": "vite preview",
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
+    "tauri": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1",
+    "tauri:dev": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 dev",
+    "tauri:build": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 build",
     "setup": "powershell -ExecutionPolicy Bypass -File scripts/setup.ps1",
-    "android:init": "tauri android init",
-    "android:build": "tauri android build -- --apk",
+    "android:init": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 android init",
+    "android:build": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 android build -- --apk",
     "android:publish": "powershell -ExecutionPolicy Bypass -File scripts/publish-apk.ps1"
   },
   "dependencies": {
@@ -53,6 +54,7 @@
     "@vitejs/plugin-react": "^4.6.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vitest": "^4.1.11"
   }
 }

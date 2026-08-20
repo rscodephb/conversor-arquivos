@@ -1,0 +1,12 @@
+# Changelog
+
+## 0.1.1
+
+- Native file drop on the Windows app (Tauri drag-and-drop, not HTML5-only).
+- `tauri:dev` / `tauri:build` select Windows SDK 10.0.22621 when 10.0.26100 libraries are corrupt.
+- Product README, GitHub Actions CI, and unit tests for format detection and conversion targets.
+
+## 0.1.0
+
+- First public Windows NSIS installer and Android APK.
+- Offline conversions for images, PDF, Office-like documents, CSV/XLSX, and plain text.

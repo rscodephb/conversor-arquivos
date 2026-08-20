@@ -1,10 +1,18 @@
 # Conversor de Arquivos Offline
 
-Feito por **R&S CODE**. Conversor **100% no dispositivo** para Windows e Android: nada vai para a nuvem.
+Offline file converter for **Windows** and **Android**. Files never leave the device.
 
-**[Baixar Conversor de Arquivos Offline (Android)](https://drive.google.com/file/d/1cMU3g4Zp1OE73N2DOxttwsNpyy2FQfuA/view?usp=sharing)**
+Feito por **R&S CODE**. Conversões 100% no aparelho: PDF, imagens, DOCX, ODT, planilhas e texto. Sem conta, sem servidor, sem nuvem.
 
-Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As conversões rodam no WebView com bibliotecas JavaScript (`pdf-lib`, PDF.js, mammoth, docx, JSZip).
+[![CI](https://github.com/rscodephb/conversor-arquivos/actions/workflows/ci.yml/badge.svg)](https://github.com/rscodephb/conversor-arquivos/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/rscodephb/conversor-arquivos)](https://github.com/rscodephb/conversor-arquivos/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
+
+![Tela do Conversor Offline](docs/screenshot-desktop.png)
+
+**[Baixar Windows e Android](https://github.com/rscodephb/conversor-arquivos/releases/latest)**
+
+No Windows use o instalador `.exe`. No Android instale o `.apk` (sideload). Os arquivos oficiais estão na página de Releases.
 
 ## Conversões
 
@@ -13,7 +21,7 @@ Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As convers
 | PNG, JPG, WEBP, BMP | PDF (um arquivo ou várias imagens juntas) | Alta |
 | PDF | PNG / JPG (uma imagem por página) | Alta |
 | Vários PDFs | PDF unificado | Alta |
-| DOCX / ODT | PDF, DOCX, ODT | Boa para texto, listas, tabelas simples e imagens |
+| DOCX / ODT | PDF, DOCX, ODT, HTML, TXT, MD | Boa para texto, listas, tabelas simples e imagens |
 | PDF | DOCX / ODT | Aproximada: texto + imagens; o layout não é 1:1 |
 | DOC antigo | PDF / DOCX | Extração de texto |
 | TXT, MD, HTML | PDF, DOCX, ODT, HTML, TXT, MD | Alta |
@@ -21,97 +29,35 @@ Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As convers
 
 PDF digitalizado (só imagem) entra no Word como imagem. Esta versão não tem OCR.
 
-## Instalação
+## Arquitetura
 
-O `npm install` só baixa as bibliotecas JavaScript. Para o app Windows/Android o Windows ainda precisa de Rust, MSVC e (opcionalmente) Android Studio.
+O app é [Tauri 2](https://tauri.app/) + React + TypeScript. O Rust abre a janela, o disco e o empacotamento (NSIS no Windows, APK no Android). As conversões rodam no WebView, neste dispositivo, com `pdf-lib`, PDF.js, mammoth, docx e JSZip.
 
-Na pasta do projeto rode:
-
-```bash
-npm run setup
-```
-
-Isso roda `npm install`, instala Rust (rustup), adiciona os targets Android, tenta as Build Tools C++ via `winget` e, se o Android SDK já existir, baixa o NDK.
-
-O que **não** cabe num `npm install`:
-
-- [Node.js](https://nodejs.org/) 20+ (precisa existir antes)
-- [Android Studio](https://developer.android.com/studio) na primeira vez (SDK grande; o `setup` reaproveita se já estiver em `%LOCALAPPDATA%\Android\Sdk`)
-- Aceitar o UAC se as Build Tools forem instaladas
+Não há LibreOffice embutido: documentos com layout complexo são simplificados de propósito. A interface avisa a fidelidade de cada destino.
 
 ## Desenvolvimento
 
 ```bash
 npm run setup
-npm run dev
-```
-
-A interface abre em `http://localhost:1420`. O salvamento no navegador usa download local.
-
-App nativo no Windows:
-
-```bash
+npm test
 npm run tauri:dev
 ```
 
-## Build Windows
+`npm run setup` instala dependências JavaScript, Rust e, se possível, as Build Tools C++ e o NDK. É preciso ter [Node.js](https://nodejs.org/) 20+ antes. A UI também abre no navegador em `http://localhost:1420` com `npm run dev`.
 
-Gera o instalador NSIS em `src-tauri/target/release/bundle/nsis/`. O bootstrapper do WebView2 vai embutido.
+Build Windows (instalador NSIS, WebView2 embutido):
 
 ```bash
 npm run tauri:build
 ```
 
-## Build Android (APK)
-
-Na primeira vez:
-
-```bash
-npm run android:init
-```
-
-Depois:
+Build Android (primeira vez: `npm run android:init`):
 
 ```bash
 npm run android:build
 ```
 
-O APK sai em `src-tauri/gen/android/app/build/outputs/apk/`. Não é necessário publicar na Play Store: o Android instala o APK direto (sideload).
-
-1. No celular, ative **Fontes desconhecidas** / instalar apps deste computador (em Configurações → Segurança, ou na hora de abrir o arquivo).
-2. Copie o APK para o aparelho (USB, WhatsApp, e-mail) e abra o arquivo.
-3. Confirme a instalação. Atualizações futuras: gere um APK novo e instale por cima.
-
-Para hospedar o APK no **seu** Google Drive e reutilizar o mesmo link a cada build:
-
-1. Instale o [rclone](https://rclone.org/) e rode `rclone config` para criar um remote `gdrive` na **sua** conta.
-2. Crie uma pasta no Drive e compartilhe **somente o arquivo do APK** (qualquer pessoa com o link).
-3. Sempre envie com o **mesmo caminho e nome**; o Drive atualiza o arquivo e o link não muda.
-
-```bash
-npm run android:publish -- -DriveDest "gdrive:MinhaPasta/Conversor de Arquivos Offline.apk"
-```
-
-Ou grave o destino uma vez:
-
-```bash
-setx DRIVE_APK_DEST "gdrive:MinhaPasta/Conversor de Arquivos Offline.apk"
-npm run android:publish
-```
-
-Outra opção sem Drive: [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) — anexe o APK na versão (por exemplo `v0.1.0`).
-
-## Solução de problemas
-
-**`linker link.exe not found`** — instale o workload C++ das Build Tools e abra um terminal novo.
-
-**`Android NDK not found`** — no Android Studio: SDK Manager → SDK Tools → NDK (Side by side) e Android SDK Command-line Tools.
-
-```bash
-set ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk
-set NDK_HOME=%ANDROID_HOME%\ndk\<versao>
-set JAVA_HOME=C:\Program Files\Android\Android Studio\jbr
-```
+Detalhes de SDK, APK e publicação: [docs/dev.md](docs/dev.md). Como contribuir: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licença
 

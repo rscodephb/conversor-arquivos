@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { FileUp, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useTauriFileDrop } from "@/hooks/use-tauri-file-drop";
 import { detectFileFormat, formatLabel, isRasterFormat } from "@/lib/formats";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +31,11 @@ export interface FileDropzoneProps {
 
 export function FileDropzone({ files, onFilesChange }: FileDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const filesRef = useRef(files);
+  const onFilesChangeRef = useRef(onFilesChange);
   const [isDragging, setIsDragging] = useState(false);
+  filesRef.current = files;
+  onFilesChangeRef.current = onFilesChange;
   const items = useMemo(
     () =>
       files.map((file) => ({
@@ -41,6 +46,7 @@ export function FileDropzone({ files, onFilesChange }: FileDropzoneProps) {
   );
 
   function addFiles(list: FileList | File[]): void {
+    const currentFiles = filesRef.current;
     const incoming = Array.from(list);
     if (incoming.length === 0) return;
     const allIncomingImages = incoming.every((file) => {
@@ -48,23 +54,28 @@ export function FileDropzone({ files, onFilesChange }: FileDropzoneProps) {
       return format !== null && isRasterFormat(format);
     });
     const allCurrentImages =
-      files.length > 0 &&
-      files.every((file) => {
+      currentFiles.length > 0 &&
+      currentFiles.every((file) => {
         const format = detectFileFormat(file);
         return format !== null && isRasterFormat(format);
       });
-    if (allIncomingImages && (files.length === 0 || allCurrentImages)) {
-      const next = [...files];
+    if (allIncomingImages && (currentFiles.length === 0 || allCurrentImages)) {
+      const next = [...currentFiles];
       incoming.forEach((file) => {
         if (!next.some((existing) => existing.name === file.name && existing.size === file.size)) {
           next.push(file);
         }
       });
-      onFilesChange(next);
+      onFilesChangeRef.current(next);
       return;
     }
-    onFilesChange([incoming[incoming.length - 1]]);
+    onFilesChangeRef.current([incoming[incoming.length - 1]]);
   }
+
+  useTauriFileDrop({
+    onDrop: addFiles,
+    onDraggingChange: setIsDragging,
+  });
 
   return (
     <div className="space-y-3">

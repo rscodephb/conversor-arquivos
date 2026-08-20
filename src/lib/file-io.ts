@@ -1,6 +1,6 @@
 import { save } from "@tauri-apps/plugin-dialog";
-import { writeFile } from "@tauri-apps/plugin-fs";
-import { createBlob, extensionOf } from "@/lib/bytes";
+import { readFile, writeFile } from "@tauri-apps/plugin-fs";
+import { bytesToArrayBuffer, createBlob, extensionOf } from "@/lib/bytes";
 
 export function isTauriRuntime(): boolean {
   return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
@@ -9,6 +9,16 @@ export function isTauriRuntime(): boolean {
 export interface SaveBytesResult {
   readonly didSave: boolean;
   readonly path: string | null;
+}
+
+export async function readDroppedPathAsFile(path: string): Promise<File | null> {
+  try {
+    const bytes = await readFile(path);
+    const name = path.split(/[/\\]/).pop() || "arquivo";
+    return new File([bytesToArrayBuffer(bytes)], name);
+  } catch {
+    return null;
+  }
 }
 
 export async function saveBytes(params: {

@@ -1,6 +1,6 @@
 [package]
 name = "conversor-arquivos"
-version = "0.1.0"
+version = "0.1.1"
 description = "Offline file converter for Windows and Android"
 authors = ["R&S CODE"]
 edition = "2021"

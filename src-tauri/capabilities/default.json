@@ -14,10 +14,13 @@
     {
       "identifier": "fs:scope",
       "allow": [
+        { "path": "**" },
         { "path": "$HOME/**" },
         { "path": "$DOWNLOAD/**" },
         { "path": "$DOCUMENT/**" },
-        { "path": "$DESKTOP/**" }
+        { "path": "$DESKTOP/**" },
+        { "path": "$PICTURE/**" },
+        { "path": "$PUBLIC/**" }
       ]
     }
   ]
