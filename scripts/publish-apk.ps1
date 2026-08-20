@@ -2,7 +2,7 @@ param(
   [string]$DriveDest = $env:DRIVE_APK_DEST
 )
 if (-not $DriveDest) {
-  $DriveDest = "gdrive:Projetos Pessoais/Conversor de Arquivos Offline.apk"
+  throw "Set DRIVE_APK_DEST or pass -DriveDest, e.g. gdrive:Apps/Conversor de Arquivos Offline.apk"
 }
 
 $ErrorActionPreference = "Stop"

@@ -76,13 +76,30 @@ Depois:
 npm run android:build
 ```
 
-O APK sai em `src-tauri/gen/android/app/build/outputs/apk/`.
+O APK sai em `src-tauri/gen/android/app/build/outputs/apk/`. Não é necessário publicar na Play Store: o Android instala o APK direto (sideload).
 
-Para republicar o APK no mesmo arquivo do Drive (o link compartilhado não muda):
+1. No celular, ative **Fontes desconhecidas** / instalar apps deste computador (em Configurações → Segurança, ou na hora de abrir o arquivo).
+2. Copie o APK para o aparelho (USB, WhatsApp, e-mail) e abra o arquivo.
+3. Confirme a instalação. Atualizações futuras: gere um APK novo e instale por cima.
+
+Para hospedar o APK no **seu** Google Drive e reutilizar o mesmo link a cada build:
+
+1. Instale o [rclone](https://rclone.org/) e rode `rclone config` para criar um remote `gdrive` na **sua** conta.
+2. Crie uma pasta no Drive e compartilhe **somente o arquivo do APK** (qualquer pessoa com o link).
+3. Sempre envie com o **mesmo caminho e nome**; o Drive atualiza o arquivo e o link não muda.
 
 ```bash
+npm run android:publish -- -DriveDest "gdrive:MinhaPasta/Conversor de Arquivos Offline.apk"
+```
+
+Ou grave o destino uma vez:
+
+```bash
+setx DRIVE_APK_DEST "gdrive:MinhaPasta/Conversor de Arquivos Offline.apk"
 npm run android:publish
 ```
+
+Outra opção sem Drive: [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) — anexe o APK na versão (por exemplo `v0.1.0`).
 
 ## Solução de problemas
 
