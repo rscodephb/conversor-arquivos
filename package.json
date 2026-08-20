@@ -1,0 +1,56 @@
+{
+  "name": "conversor-arquivos",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Offline file converter for Windows and Android. Files never leave the device.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rscodephb/conversor-arquivos.git"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "android:init": "tauri android init",
+    "android:build": "tauri android build -- --apk",
+    "android:publish": "powershell -ExecutionPolicy Bypass -File scripts/publish-apk.ps1"
+  },
+  "dependencies": {
+    "@radix-ui/react-progress": "^1.1.16",
+    "@radix-ui/react-slot": "^1.3.3",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2.7.2",
+    "@tauri-apps/plugin-fs": "^2.5.1",
+    "@tauri-apps/plugin-opener": "^2",
+    "cfb": "^1.2.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "docx": "^9.7.1",
+    "jszip": "^3.10.1",
+    "lucide-react": "^1.33.0",
+    "mammoth": "^1.12.1",
+    "marked": "^18.0.10",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.4.624",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@tauri-apps/cli": "^2",
+    "@types/jszip": "^3.4.0",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
+  }
+}
