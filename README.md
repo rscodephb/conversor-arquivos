@@ -4,8 +4,6 @@ Feito por **R&S CODE**. Conversor **100% no dispositivo** para Windows e Android
 
 **[Baixar Conversor de Arquivos Offline (Android)](https://drive.google.com/file/d/1cMU3g4Zp1OE73N2DOxttwsNpyy2FQfuA/view?usp=sharing)**
 
-O link aponta só para este APK. Quem baixa não acessa o restante do Drive.
-
 Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As conversões rodam no WebView com bibliotecas JavaScript (`pdf-lib`, PDF.js, mammoth, docx, JSZip).
 
 ## Conversões
