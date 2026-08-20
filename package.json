@@ -20,7 +20,7 @@
     "tauri:build": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 build",
     "setup": "powershell -ExecutionPolicy Bypass -File scripts/setup.ps1",
     "android:init": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 android init",
-    "android:build": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 android build -- --apk",
+    "android:build": "powershell -ExecutionPolicy Bypass -File scripts/invoke-tauri.ps1 android build --apk",
     "android:publish": "powershell -ExecutionPolicy Bypass -File scripts/publish-apk.ps1"
   },
   "dependencies": {
