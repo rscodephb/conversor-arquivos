@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { ConversionHistory } from "@/components/conversion-history";
 import { detectFileFormat, formatLabel, isRasterFormat, MIME_TYPES, type ConversionResult, type FileFormat } from "@/lib/formats";
 import { listConversionTargets } from "@/lib/converters/registry";
-import { saveBytes } from "@/lib/file-io";
+import { saveBytes, isAndroidRuntime } from "@/lib/file-io";
 import { openConversionOutput } from "@/lib/open-conversion-output";
 import { buildConvertedFilename } from "@/lib/build-converted-filename";
 import { extensionOf, stemOf } from "@/lib/bytes";
@@ -94,6 +94,7 @@ export function ConverterPage() {
               }),
             );
       setProgress(96);
+      setStatus("Salvando o arquivo…");
       const saved = await saveBytes({
         bytes: output.bytes,
         defaultName: output.filename,
@@ -101,7 +102,13 @@ export function ConverterPage() {
       });
       setProgress(100);
       setLastOutput({ result: output, savedPath: saved.path });
-      setStatus(saved.didSave ? null : "Conversão concluída, mas o salvamento foi cancelado.");
+      setStatus(
+        saved.didSave
+          ? saved.path && isAndroidRuntime()
+            ? `Salvo em Downloads: ${output.filename}`
+            : null
+          : "Conversão concluída, mas o salvamento foi cancelado.",
+      );
     } catch (err) {
       const message = err instanceof Error ? err.message : "Falha ao converter.";
       setError(message);
@@ -183,12 +190,14 @@ export function ConverterPage() {
         {isWorking && (
           <div className="space-y-2">
             <Progress value={progress} />
-            <p className="text-xs text-muted">Convertendo… {progress}%</p>
+            <p className="text-xs text-muted">
+              {progress >= 96 ? "Salvando o arquivo…" : `Convertendo… ${progress}%`}
+            </p>
           </div>
         )}
         {error && <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p>}
         {status && <p className="rounded-xl bg-teal-50 px-3 py-2 text-sm text-accent-dark">{status}</p>}
-        {lastOutput && !status && (
+        {lastOutput && (!status || status.startsWith("Salvo em Downloads")) && (
           <button
             type="button"
             disabled={isWorking}

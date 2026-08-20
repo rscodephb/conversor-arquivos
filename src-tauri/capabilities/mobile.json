@@ -16,6 +16,14 @@
     },
     "dialog:default",
     "fs:allow-write-file",
-    "fs:allow-read-file"
+    "fs:allow-read-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        { "path": "$DOWNLOAD/**" },
+        { "path": "$DOCUMENT/**" },
+        { "path": "$APPLOCALDATA/**" }
+      ]
+    }
   ]
 }
