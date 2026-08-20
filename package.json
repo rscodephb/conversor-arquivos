@@ -17,6 +17,7 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
+    "setup": "powershell -ExecutionPolicy Bypass -File scripts/setup.ps1",
     "android:init": "tauri android init",
     "android:build": "tauri android build -- --apk",
     "android:publish": "powershell -ExecutionPolicy Bypass -File scripts/publish-apk.ps1"

@@ -21,17 +21,28 @@ Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As convers
 
 PDF digitalizado (só imagem) entra no Word como imagem. Esta versão não tem OCR.
 
-## Pré-requisitos
+## Instalação
 
-- [Node.js](https://nodejs.org/) 20+
-- [Rust](https://www.rust-lang.org/tools/install) via rustup
-- Windows: [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) com workload **Desktop development with C++** e Windows SDK
-- Android: Android Studio, SDK, NDK e JDK 17+ (`JAVA_HOME` apontando para o JBR 21 do Android Studio funciona)
+O `npm install` só baixa as bibliotecas JavaScript. Para o app Windows/Android o Windows ainda precisa de Rust, MSVC e (opcionalmente) Android Studio.
+
+Na pasta do projeto, um comando tenta instalar o que der automatizar:
+
+```bash
+npm run setup
+```
+
+Isso roda `npm install`, instala Rust (rustup), adiciona os targets Android, tenta as Build Tools C++ via `winget` e, se o Android SDK já existir, baixa o NDK.
+
+O que **não** cabe num `npm install`:
+
+- [Node.js](https://nodejs.org/) 20+ (precisa existir antes)
+- [Android Studio](https://developer.android.com/studio) na primeira vez (SDK grande; o `setup` reaproveita se já estiver em `%LOCALAPPDATA%\Android\Sdk`)
+- Aceitar o UAC se as Build Tools forem instaladas
 
 ## Desenvolvimento
 
 ```bash
-npm install
+npm run setup
 npm run dev
 ```
 
