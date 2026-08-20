@@ -2,7 +2,7 @@
 name = "conversor-arquivos"
 version = "0.1.0"
 description = "Offline file converter for Windows and Android"
-authors = ["rscodephb"]
+authors = ["R&S CODE"]
 edition = "2021"
 
 [lib]

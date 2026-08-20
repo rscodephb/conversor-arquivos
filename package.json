@@ -2,8 +2,9 @@
   "name": "conversor-arquivos",
   "private": true,
   "version": "0.1.0",
-  "description": "Offline file converter for Windows and Android. Files never leave the device.",
+  "description": "Offline file converter for Windows and Android by R&S CODE. Files never leave the device.",
   "license": "MIT",
+  "author": "R&S CODE",
   "repository": {
     "type": "git",
     "url": "https://github.com/rscodephb/conversor-arquivos.git"

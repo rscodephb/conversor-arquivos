@@ -1,6 +1,10 @@
-# Conversor Offline
+# Conversor de Arquivos Offline
 
-Conversor de arquivos **100% no dispositivo** para Windows e Android. Nada é enviado para a nuvem: PDF, imagens, DOCX, ODT, planilhas e texto são processados localmente no app.
+Feito por **R&S CODE**. Conversor **100% no dispositivo** para Windows e Android: nada vai para a nuvem.
+
+**[Baixar Conversor de Arquivos Offline (Android)](https://drive.google.com/file/d/1cMU3g4Zp1OE73N2DOxttwsNpyy2FQfuA/view?usp=sharing)**
+
+O link aponta só para este APK. Quem baixa não acessa o restante do Drive.
 
 Stack: [Tauri 2](https://tauri.app/) + React + TypeScript + Tailwind. As conversões rodam no WebView com bibliotecas JavaScript (`pdf-lib`, PDF.js, mammoth, docx, JSZip).
 
@@ -51,7 +55,7 @@ npm run tauri:build
 
 ## Build Android (APK)
 
-Na primeira vez (já feito neste repositório):
+Na primeira vez:
 
 ```bash
 npm run android:init
@@ -65,10 +69,10 @@ npm run android:build
 
 O APK sai em `src-tauri/gen/android/app/build/outputs/apk/`.
 
-Para publicar o APK em um arquivo fixo no Google Drive (o link compartilhado não muda), configure o rclone com um remote `gdrive` e rode:
+Para republicar o APK no mesmo arquivo do Drive (o link compartilhado não muda):
 
 ```bash
-npm run android:publish -- -DriveDest "gdrive:Pasta/Conversor-Offline.apk"
+npm run android:publish
 ```
 
 ## Solução de problemas
@@ -86,3 +90,5 @@ set JAVA_HOME=C:\Program Files\Android\Android Studio\jbr
 ## Licença
 
 MIT. Ver [LICENSE](LICENSE).
+
+© R&S CODE

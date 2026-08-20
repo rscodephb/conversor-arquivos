@@ -108,7 +108,7 @@ export function ConverterPage() {
   return (
     <div className="mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-4 py-8 sm:py-12">
       <header className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Offline</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">R&S CODE</p>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Conversor de arquivos</h1>
         <p className="max-w-2xl text-muted">
           Converta documentos e imagens neste computador ou celular, sem internet e sem enviar nada para a nuvem.
@@ -215,8 +215,9 @@ export function ConverterPage() {
           </Button>
         </div>
       </Card>
-      <footer className="text-xs text-muted">
-        PDF digitalizado (só imagem) entra no DOCX como imagem, sem OCR. O formato .doc antigo é extração de texto.
+      <footer className="space-y-1 text-xs text-muted">
+        <p>PDF digitalizado (só imagem) entra no DOCX como imagem, sem OCR. O formato .doc antigo é extração de texto.</p>
+        <p>Feito por R&S CODE.</p>
       </footer>
     </div>
   );

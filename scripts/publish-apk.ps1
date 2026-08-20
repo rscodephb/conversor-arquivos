@@ -2,7 +2,7 @@ param(
   [string]$DriveDest = $env:DRIVE_APK_DEST
 )
 if (-not $DriveDest) {
-  $DriveDest = "gdrive:Projetos Pessoais/app-universal-release-signed.apk"
+  $DriveDest = "gdrive:Projetos Pessoais/Conversor de Arquivos Offline.apk"
 }
 
 $ErrorActionPreference = "Stop"
