@@ -25,7 +25,7 @@ PDF digitalizado (só imagem) entra no Word como imagem. Esta versão não tem O
 
 O `npm install` só baixa as bibliotecas JavaScript. Para o app Windows/Android o Windows ainda precisa de Rust, MSVC e (opcionalmente) Android Studio.
 
-Na pasta do projeto, um comando tenta instalar o que der automatizar:
+Na pasta do projeto rode:
 
 ```bash
 npm run setup
